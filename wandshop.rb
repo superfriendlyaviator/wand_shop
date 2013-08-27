@@ -18,7 +18,8 @@ class Wandshop
       Press 2 to buy a new wand. 
       Press 3 to sell your old wand.
       Press 4 to see your wands.
-      Press 5 to leave the wand shop." 
+      Press 5 to see your gold. 
+      Press 6 to leave the wand shop." 
   end
 
 
@@ -127,6 +128,10 @@ class Wandshop
   def show_wands 
     puts player_wands.collect{|wand| puts wand}
   end
+  
+  def show_gold 
+    puts "You have #{player_gold} gold. Spend it wisely." 
+  end 
 
   def leave 
     puts "Thank you for your purchase. Good luck fighting those shadow monsters!"
@@ -149,7 +154,8 @@ class Wandshop
       when '2' then buy_wands 
       when '3' then sell_wands 
       when '4' then show_wands
-      when '5' then leave
+      when '5' then show_gold
+      when '6' then leave
       else get_out!
       end 
     end 
