@@ -1,3 +1,6 @@
+require_relative 'wand'
+require_relative 'known_items'
+
 class Wandshop
   attr_reader :player_wands, :wandmenu, :wand_options
   attr_accessor :player_gold
@@ -6,13 +9,10 @@ class Wandshop
     @player_gold = 100
     @player_wands = []
     @wandmenu = {
-      :Toothpick_Wand => 2,
-      :Spoon_Wand => 5,
-      :Practice_Wand => 10,
-      :Paper_Cut_Out => 25,
-      :Vorpal_Wand => 75,
-      :Lightsaber_Wand => 200
-    } 
+      KnownItems::TOOTHPICK_WAND.name.downcase => KnownItems::TOOTHPICK_WAND,
+      KnownItems::SPOON_WAND.name.downcase => KnownItems::SPOON_WAND
+    }
+
     @wand_options = "Welcome to the wand shop. Please select an option.
       Press 1 to see all wands. 
       Press 2 to buy a new wand. 
@@ -24,96 +24,29 @@ class Wandshop
 
 
   def see_wands 
-    puts wandmenu.each{|wand, price| puts "#{wand} - #{price}"} 
+    wandmenu.each{|name, wand| puts "#{wand.name} - #{wand.cost} gold"} 
   end
 
   def buy_wands 
-   puts wandmenu.each{|wand, price| puts "#{wand} - #{price}"} 
-      puts "Please select a wand from the menu." 
-      user_wants = gets.chomp.downcase 
-      case user_wants 
-      
-      when "toothpick wand"
-          if player_gold > wandmenu[:Toothpick_Wand]
-            print "Ah, the mighty Toothpick Wand! Watch out! It's sharp! It's yours for only "
-            print wandmenu[:Toothpick_Wand]
-            print " gold!" 
-            player_wands.push(:Toothpick_Wand)
-            puts "PLAYER GOLD: #{player_gold}"
-            puts "WANDMENU: #{wandmenu[:Toothpick_Wand]}"
-            self.player_gold -= wandmenu[:Toothpick_Wand]
-            puts "You have #{player_gold} gold left to spend. Choose wisely."
-          else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-          end
-          
-      when "spoon wand"
-          if player_gold > wandmenu[:Spoon_Wand]
-            puts "Ah, the silvery slurpperery Spoon Wand! Once you're done slaying shadow monsters you can go have a nice spot of stew! It's yours for only "
-            print wandmenu[:Spoon_Wand] 
-            print " gold!" 
-            player_wands.push(:Spoon_Wand)
-            self.player_gold -= wandmenu[:Spoon_Wand]
-            puts "You have #{player_gold} gold left to spend. Choose wisely."
-         else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-         end
-          
-      when "practice wand" 
-          if player_gold > wandmenu[:Practice_Wand]
-            print "Oh...the uh...Practice Wand...At least it' sturdy! It's yours for only "
-            print wandmenu[:Practice_Wand]
-            print " gold!" 
-            player_wands.push(:Practice_Wand)
-            self.player_gold -= wandmenu[:Practice_Wand]
-            puts "You have #{player_gold} gold left to spend. Choose wisely."
-          else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-           end
-            
-      when "paper cut out" 
-           if player_gold > wandmenu[:Paper_Cut_Out]
-          print "Ah, the flimsy paper cut out wand! It's yours for only "
-          print wandmenu[:Paper_Cut_Out]
-          print " gold!" 
-          player_wands.push(:Paper_Cut_Out)
-          self.player_gold -= wandmenu[:Paper_Cut_Out]
-          puts "You have #{player_gold} gold left to spend. Choose wisely."
-          else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-          end
-          
+    wandmenu.each{|name, wand| puts "#{wand.name} - #{wand.cost} gold" } 
+    puts "Please select a wand from the menu." 
+    user_wants = gets.chomp.downcase
+    wand = wandmenu[user_wants]
+
+    if wand
+      if player_gold > wand.cost
+        puts wand.description
+        puts "This wand costs #{wand.cost} gold."
+        player_wands.push(wand)
+        self.player_gold -= wand.cost
+        puts "You have #{player_gold} gold left to spend. Choose wisely."
+      else 
+        puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
+      end
      
-     when 'vorpal wand'
-          if player_gold > wandmenu[:Vorpal_Wand]
-            puts 'One, two! One, two! And through and through
-            The vorpal blade went snicker-snack!
-            He left it dead, and with its head
-            He went galumphing back.' 
-            print wandmenu[:Vorpal_Wand]
-            print " gold!" 
-            player_wands.push(:Vorpal_Wand)
-            self.player_gold -= wandmenu[:Vorpal_Wand]
-            puts "You have #{player_gold} gold left to spend. Choose wisely."
-          else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-          end
-          
-      when 'lightsaber wand'
-          if player_gold > wandmenu[:Lightsaber_Wand]
-            puts "Your father's light saber. This is the weapon of a Jedi Knight. Not as clumsy or random as a blaster, an elegant weapon for a more civilized age."
-            puts wandmenu[:Lightsaber_Wand]
-            print ' crystals!'
-            player_wands.push(:Lightsaber_Wand)
-            self.player_gold -= wandmenu[:Lightsaber_Wand]
-           puts "You have #{player_gold} gold left to spend. Choose wisely."
-          else 
-            puts "I'm sorry, but you can't afford that wand yet. Go battle more shadow monsters!"
-          end
-     
-      else
-          puts "I guess you don't wanna buy a wand after all! Bye now!"
-      end 
+    else
+      puts "I guess you don't wanna buy a wand after all! Bye now!"
+    end 
   end
 
   def sell_wands 
