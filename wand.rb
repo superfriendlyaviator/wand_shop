@@ -1,5 +1,5 @@
 class Wand 
-  attr_accessor :name, :cost, :description
+  attr_reader :name, :cost, :description
 
   def initialize(name, cost, description)
     @name = name 
