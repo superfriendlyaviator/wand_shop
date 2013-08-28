@@ -8,11 +8,7 @@ class Wandshop
   def initialize
     @player_gold = 100
     @player_wands = []
-    @wandmenu = {
-      KnownItems::TOOTHPICK_WAND.name.downcase => KnownItems::TOOTHPICK_WAND,
-      KnownItems::SPOON_WAND.name.downcase => KnownItems::SPOON_WAND
-    }
-
+    @wandmenu = KnownItems.items_by_name
     @wand_options = "Welcome to the wand shop. Please select an option.
       Press 1 to see all wands. 
       Press 2 to buy a new wand. 
@@ -36,7 +32,7 @@ class Wandshop
     if wand
       if player_gold > wand.cost
         puts wand.description
-        puts "This wand costs #{wand.cost} gold."
+        puts "It's yours for only #{wand.cost} gold."
         player_wands.push(wand)
         self.player_gold -= wand.cost
         puts "You have #{player_gold} gold left to spend. Choose wisely."
