@@ -6,6 +6,10 @@ class Wand
     @cost = cost  
     @description = description
   end
+
+  def resale_value
+    cost / 2
+  end
   
   #def attack
   #end
