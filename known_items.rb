@@ -13,11 +13,11 @@ class KnownItems
   # else
   #  make_it_an_instance_method
   # end
-  
-  TOOTHPICK_WAND = Wand.new('Toothpick Wand', 2, "A small little thing.")
-  SPOON_WAND = Wand.new('Spoon Wand', 5, "Who uses a spoon?")
-  PRACTICE_WAND = Wand.new('Practice Wand', 10, "Oh...the uh...Practice Wand...At least it' sturdy!")
-  PAPER_CUT_OUT = Wand.new('Paper Cut Out', 25, "Ah, the flimsy paper cut out wand!")
+
+  TOOTHPICK_WAND = Wand.new('Toothpick Wand', 10, "A small little thing.")
+  SPOON_WAND = Wand.new('Spoon Wand', 15, "Who uses a spoon?")
+  PRACTICE_WAND = Wand.new('Practice Wand', 25, "Oh...the uh...Practice Wand...At least it' sturdy!")
+  PAPER_CUT_OUT = Wand.new('Paper Cut Out', 50, "Ah, the flimsy paper cut out wand!")
   VORPAL_WAND = Wand.new('Vorpal Wand', 75,  "One, two! One, two! And through and through
 The vorpal blade went snicker-snack!
 He left it dead, and with its head
